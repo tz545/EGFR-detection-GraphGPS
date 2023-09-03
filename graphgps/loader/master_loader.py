@@ -26,6 +26,8 @@ from graphgps.transform.transforms import (pre_transform_in_memory,
                                            typecast_x, concat_x_and_pos,
                                            clip_graphs_to_size)
 
+from EGFR_addons.dataset_creation import EGFR_Dataset_Mem
+
 
 def log_loaded_dataset(dataset, format, name):
     logging.info(f"[*] Loaded dataset '{name}' from '{format}':")
@@ -177,6 +179,12 @@ def load_dataset_master(format, name, dataset_dir):
 
         else:
             raise ValueError(f"Unsupported OGB(-derived) dataset: {name}")
+
+    elif format == 'OGB-EGFR':
+        ogb_dataset_id = format.split('-', 1)[1]
+        dataset_dir = osp.join(dataset_dir, ogb_dataset_id)
+        dataset = EGFR_Dataset_Mem(dataset_dir)    
+    
     else:
         raise ValueError(f"Unknown data format: {format}")
 
