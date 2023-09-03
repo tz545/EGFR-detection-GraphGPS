@@ -3,6 +3,7 @@ metric_best: mae
 metric_agg: argmin
 wandb:
   use: True
+  entity: tz545
   project: EGFR
 dataset:
   format: OGB-EGFR
