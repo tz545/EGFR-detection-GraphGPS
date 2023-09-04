@@ -22,7 +22,7 @@ dataset:
   edge_encoder_bn: False
 pretrained:
   dir: pretrained/pcqm4m-GPS+RWSE.deep
-  reset_prediction_head: False
+  reset_prediction_head: True
 posenc_RWSE:
   enable: True
   kernel:
@@ -32,7 +32,7 @@ posenc_RWSE:
   raw_norm_type: BatchNorm
 train:
   mode: custom
-  batch_size: 32
+  batch_size: 256
   eval_period: 1
 model:
   type: GPSModel
