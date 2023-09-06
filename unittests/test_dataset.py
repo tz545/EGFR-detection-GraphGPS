@@ -1,12 +1,14 @@
 import pytest 
 import torch
+import sys
+from pathlib import Path
 
-from dataset_creation import EGFR_Dataset_Mem
+from EGFR_addons.dataset_creation import EGFR_Dataset_Mem
 
 
 @pytest.fixture
 def dataset():
-    return EGFR_Dataset_Mem("../datasets/EGFR")
+    return EGFR_Dataset_Mem("datasets/EGFR")
 
 def test_atom_types_allowed(dataset):
     """ 
