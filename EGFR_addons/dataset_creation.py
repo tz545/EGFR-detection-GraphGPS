@@ -3,12 +3,13 @@ from torch_geometric.data import InMemoryDataset, Data
 import pandas as pd
 from ogb.utils.mol import smiles2graph
 
-class EGFR_Dataset_Mem(InMemoryDataset):
-    """ Generate custom dataset of EGFR compounds following OGB standards
 
-        Expect EGFR_compounds_lipinsky.csv file saved in datasets/EGFR/raw
-        Outputs EGFR_compounds_lipinsky.pt to datasets/EGFR/processed
-        
+class EGFR_Dataset_Mem(InMemoryDataset):
+    """Generate custom dataset of EGFR compounds following OGB standards
+
+    Expect EGFR_compounds_lipinsky.csv file saved in datasets/EGFR/raw
+    Outputs EGFR_compounds_lipinsky.pt to datasets/EGFR/processed
+
     """
 
     def __init__(self, root, transform=None, pre_transform=None, pre_filter=None):
@@ -21,8 +22,8 @@ class EGFR_Dataset_Mem(InMemoryDataset):
 
     @property
     def processed_file_names(self):
-        return 'EGFR_compounds_lipinsky.pt'
-    
+        return "EGFR_compounds_lipinsky.pt"
+
     def download(self):
         pass
 
@@ -34,10 +35,12 @@ class EGFR_Dataset_Mem(InMemoryDataset):
         for i in range(self.dataframe.shape[0]):
             mol_smile = self.dataframe.loc[self.dataframe.index[i], "smiles"]
             graph = smiles2graph(mol_smile)
-            pyg_graph = Data(x=torch.tensor(graph['node_feat'], dtype=torch.long), 
-                             edge_index=torch.tensor(graph['edge_index'], dtype=torch.long), 
-                             edge_attr=torch.tensor(graph['edge_feat'], dtype=torch.long),
-                               y=self.dataframe.loc[self.dataframe.index[i], "pIC50"])
+            pyg_graph = Data(
+                x=torch.tensor(graph["node_feat"], dtype=torch.long),
+                edge_index=torch.tensor(graph["edge_index"], dtype=torch.long),
+                edge_attr=torch.tensor(graph["edge_feat"], dtype=torch.long),
+                y=self.dataframe.loc[self.dataframe.index[i], "pIC50"],
+            )
             data_list.append(pyg_graph)
 
         data, slices = self.collate(data_list)
@@ -45,5 +48,4 @@ class EGFR_Dataset_Mem(InMemoryDataset):
 
 
 if __name__ == "__main__":
-
     EGFR_Dataset_Mem("../datasets/EGFR")
